@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 from .models import Post
-from .forms import PostForm
+from .forms import PostForm, RegisterForm
 from django.contrib import messages
 
 def user_login(request):
@@ -21,6 +21,22 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect('list')
+
+def user_register(request):
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save()  # Create new user
+            login(request, user)  # Auto-login after registration
+            messages.success(request, 'Registration successful!')
+            return redirect('blog:list')  # Redirect to /posts/
+        else:
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f"{field}: {error}")
+    else:
+        form = RegisterForm()
+    return render(request, 'blog/register.html', {'form': form})
 
 def post_list(request):
     posts = Post.objects.all().order_by('-published_date')
