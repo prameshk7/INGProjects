@@ -29,14 +29,14 @@ def user_register(request):
             user = form.save()  # Create new user
             login(request, user)  # Auto-login after registration
             messages.success(request, 'Registration successful!')
-            return redirect('blog:list')  # Redirect to /posts/
+            return redirect('list')  # Redirect to /posts/
         else:
             for field, errors in form.errors.items():
                 for error in errors:
                     messages.error(request, f"{field}: {error}")
     else:
         form = RegisterForm()
-    return render(request, 'blog/register.html', {'form': form})
+    return render(request, 'register.html', {'form': form})
 
 def post_list(request):
     posts = Post.objects.all().order_by('-published_date')
