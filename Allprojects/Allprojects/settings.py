@@ -43,11 +43,12 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',  # Added for token authentication
 ]
 
+AUTH_USER_MODEL = 'todoapp.TodoUser'
+
 # Django REST Framework settings
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.SessionAuthentication', # For blogapp
-        'rest_framework.authentication.TokenAuthentication',  # For todoapp
+        'rest_framework.authentication.SessionAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',  # Allow any user to access the API
