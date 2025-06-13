@@ -13,7 +13,7 @@ def user_login(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('list')  # Redirect to /posts/
+            return redirect('list')  # Redirect to list of posts
         else:
             messages.error(request, 'Invalid username or password.')
     return render(request, 'login.html', {})
@@ -29,7 +29,7 @@ def user_register(request):
             user = form.save()  # Create new user
             login(request, user)  # Auto-login after registration
             messages.success(request, 'Registration successful!')
-            return redirect('list')  # Redirect to /posts/
+            return redirect('list')  # Redirect to list of posts
         else:
             for field, errors in form.errors.items():
                 for error in errors:
