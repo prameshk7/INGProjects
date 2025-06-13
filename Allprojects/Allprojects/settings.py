@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'blogapp', # Task-1 Blog Application
     'todoapp', # Task-2 Todo Application
     'rest_framework', # Django REST Framework for API development in task-2
+    'rest_framework.authtoken',  # Added for token authentication
 ]
 
 # Django REST Framework settings
@@ -51,7 +52,10 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
 }
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

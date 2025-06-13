@@ -21,5 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('blogapp.urls')),  # Default blogapp URLs
     path('blog/', include('blogapp.urls')), # Include the blogapp URLs
-    path('todo/', include('todoapp.urls')), # Include the todoapp URLs
+    path('api/', include('todoapp.urls')), # Include the todoapp URLs
 ]
