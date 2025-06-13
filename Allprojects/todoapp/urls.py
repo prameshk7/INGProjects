@@ -8,4 +8,6 @@ router.register(r'todos', TodoViewSet, basename='todos')
 
 urlpatterns = [
     path('', include(router.urls)), # Include the router's URLs
+    path('register/', TodoViewSet.as_view({'post': 'register'}), name='todo-register'),
+    path('login/', TodoViewSet.as_view({'post': 'login'}), name='todo-login'),
 ]
