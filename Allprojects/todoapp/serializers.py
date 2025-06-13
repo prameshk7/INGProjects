@@ -1,11 +1,18 @@
 from rest_framework import serializers
-from .models import Todo
+from .models import Todo, TodoUser
 
-class TodoSerializer(serializers.ModelSerializer): # Using ModelSerializer for automatic field generation
-    created_at_display = serializers.DateTimeField(source='created_at', read_only=True, format='%Y-%m-%d %H:%M')  # type: ignore
-    
+class TodoUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TodoUser
+        fields = ['id', 'username', 'email']
+
+class TodoSerializer(serializers.ModelSerializer):
+    owner = TodoUserSerializer(read_only=True)
+    created_at_display = serializers.SerializerMethodField()
+
+    def get_created_at_display(self, obj):
+        return obj.created_at.strftime('%Y-%m-%d %H:%M') if obj.created_at else None
+
     class Meta:
         model = Todo
-        fields = ['id', 'title', 'description', 'completed', 'created_at','created_at_display', 'owner']
-        
-        
+        fields = ['id', 'title', 'description', 'completed', 'created_at', 'created_at_display', 'owner']
