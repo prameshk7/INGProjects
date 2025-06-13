@@ -1,16 +1,34 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 from .models import Post
 from .forms import PostForm
+from django.contrib import messages
+
+def user_login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('list')  # Redirect to /posts/
+        else:
+            messages.error(request, 'Invalid username or password.')
+    return render(request, 'login.html', {})
+
+def user_logout(request):
+    logout(request)
+    return redirect('list')
 
 def post_list(request):
     posts = Post.objects.all().order_by('-published_date')
-    return render(request, 'blog/list.html', {'posts': posts})
+    return render(request, 'list.html', {'posts': posts})
 
 def post_detail(request, id):
     post = get_object_or_404(Post, id=id)
-    return render(request, 'blog/detail.html', {'post': post})
+    return render(request, 'detail.html', {'post': post})
 
 @login_required
 def post_create(request):
@@ -23,7 +41,7 @@ def post_create(request):
             return redirect('detail', id=post.id)
     else:
         form = PostForm()
-    return render(request, 'blog/form.html', {'form': form, 'action': 'Create Post'})
+    return render(request, 'form.html', {'form': form, 'action': 'Create Post'})
 
 @login_required
 def post_update(request, id):    # Method to update the post
@@ -37,7 +55,7 @@ def post_update(request, id):    # Method to update the post
             return redirect('detail', id=post.pk)
     else:
         form = PostForm(instance=post)
-    return render(request, 'blog/form.html', {'form': form, 'action': 'Update Post'})
+    return render(request, 'form.html', {'form': form, 'action': 'Update Post'})
 
 @login_required
 def post_delete(request, id):  # Method to delete the post
@@ -47,5 +65,5 @@ def post_delete(request, id):  # Method to delete the post
     if request.method == 'POST':
         post.delete()
         return redirect('list')
-    return render(request, 'blog/delete.html', {'post': post})
+    return render(request, 'delete.html', {'post': post})
 
