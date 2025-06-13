@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blogapp', # Task-1 Blog Application
+    'todoapp', # Task-2 Todo Application
 ]
 
 MIDDLEWARE = [
