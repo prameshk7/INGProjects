@@ -8,7 +8,7 @@ class PostForm(forms.ModelForm):
         model = Post
         fields = ['title', 'content']
 
-    def clean(self):                #this method prevent whitespaces
+    def clean(self):                # this method prevent whitespaces
         input_data = super().clean()
         title = input_data.get('title')
         content = input_data.get('content')
@@ -25,8 +25,7 @@ class RegisterForm(UserCreationForm):
         model = User
         fields = ['username', 'email', 'password1', 'password2']
 
-    # Basic validation for email
-    def clean_email(self):
+    def clean_email(self): # Validate that the email is unique
         email = self.cleaned_data.get('email')
         if User.objects.filter(email=email).exists():
             raise forms.ValidationError("This email is already in use.")
