@@ -43,8 +43,6 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',  # Added for token authentication
 ]
 
-AUTH_USER_MODEL = 'todoapp.TodoUser'
-
 # Django REST Framework settings
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
