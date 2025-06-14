@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'todoapp', # Task-2 Todo Application
     'rest_framework', # Django REST Framework for API development in task-2
     'rest_framework.authtoken',  # Added for token authentication
+    'profileapp', # Task-3 User Profile Application
 ]
 
 # Django REST Framework settings
@@ -55,6 +56,8 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10,
 }
 
+# Email settings for password reset functionality in task-3 profileapp
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
