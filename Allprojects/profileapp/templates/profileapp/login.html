@@ -1,19 +1,48 @@
 <!DOCTYPE html>
 <html>
-<head><title>Login</title></head>
+<head>
+    <title>Login</title>
+    <style>
+        body { background-color:rgb(152, 153, 193); display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; font-family: Arial, sans-serif; }
+        .card { background: white; padding: 30px; border-radius: 10px; max-width: 400px; width: 100%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
+        .card h2 { text-align: center; margin-bottom: 20px; color: #2E3192; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 5px; color: #333; font-size: 16px; text-align: left; }
+        .form-group input { width: 100%; padding: 12px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        .btn { background: linear-gradient(to right, #4A90E2, #2E3192); color: white; padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; width: 100%; font-size: 16px; }
+        .btn:hover { background: linear-gradient(to right, #357ABD, #1E2A72); }
+        .link { color: #4A90E2; text-decoration: none; text-align: center; display: block; margin-top: 10px; }
+        .link:hover { text-decoration: underline; }
+        .message { color: #333; text-align: center; margin-bottom: 15px; }
+        .button-group { display: flex; gap: 10px; margin-bottom: 20px; }
+        .button-group .btn { flex: 1; }
+        .errorlist { color: #d32f2f; list-style: none; padding: 0; }
+    </style>
+</head>
 <body>
-    <h2>Login</h2>
-    {% if messages %}
-        {% for message in messages %}
-            <p>{{ message }}</p>
-        {% endfor %}
-    {% endif %}
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Login</button>
-    </form>
-    <p>Need an account? <a href="{% url 'profileapp:register' %}">Register</a></p>
-    <p><a href="{% url 'profileapp:password_reset' %}">Forgot Password?</a></p>
+    <div class="card">
+        <h2>Login Form</h2>
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field|cut:"<ul class=\"errorlist\"><li>"|cut:"</li></ul>" }}
+                    {% if field.errors %}
+                        <ul class="errorlist">
+                            {% for error in field.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <div class="button-group">
+                <button type="submit" class="btn">Login</button>
+            </div>
+        </form>
+        <a href="{% url 'profileapp:password_reset' %}" class="link">Forgot password?</a>
+        <a href="{% url 'profileapp:register' %}" class="link">Not a member? Signup now</a>
+    </div>
 </body>
 </html>

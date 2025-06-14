@@ -1,20 +1,65 @@
 <!DOCTYPE html>
 <html>
-<head><title>Profile</title></head>
+<head>
+    <title>Profile</title>
+    <style>
+        body { background-color:rgb(168, 169, 215); display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; font-family: Arial, sans-serif; }
+        .card { background: white; padding: 30px; border-radius: 10px; max-width: 400px; width: 100%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
+        .card h2 { text-align: center; margin-bottom: 20px; color: #2E3192; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 5px; color: #333; }
+        .form-group input, .form-group textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        .btn { background: linear-gradient(to right, #4A90E2, #2E3192); color: white; padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; width: 100%; font-size: 16px; }
+        .btn:hover { background: linear-gradient(to right, #357ABD, #1E2A72); }
+        .link { color: #4A90E2; text-decoration: none; text-align: center; display: block; margin-top: 10px; }
+        .link:hover { text-decoration: underline; }
+        .message { color: #333; text-align: center; margin-bottom: 15px; }
+        .profile-img { max-width: 150px; margin-bottom: 10px; display: block; margin-left: auto; margin-right: auto; }
+        .view-mode { display: block; }
+        .edit-mode { display: none; }
+        .edit-btn { background: linear-gradient(to right, #4A90E2, #2E3192); color: white; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer; display: block; margin: 0 auto; }
+        .edit-btn:hover { background: linear-gradient(to right, #357ABD, #1E2A72); }
+        .button-group { display: flex; gap: 10px; }
+    </style>
+</head>
 <body>
-    <h2>Profile</h2>
-    {% if messages %}
-        {% for message in messages %}
-            <p>{{ message }}</p>
-        {% endfor %}
-    {% endif %}
-    <p>Username: {{ user.username }}</p>
-    <p>Email: {{ user.email }}</p>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Save Changes</button>
-    </form>
-    <a href="{% url 'profileapp:logout' %}">Logout</a>
+    <div class="card">
+        <h2>Profile</h2>
+        <div id="view-mode" class="view-mode">
+            {% if user.profile.profile_picture %}
+                <img src="{{ user.profile.profile_picture }}" alt="Profile Picture" class="profile-img">
+            {% else %}
+                <p>No profile picture</p>
+            {% endif %}
+            <p>Username: {{ user.username }}</p>
+            <p>Email: {{ user.email }}</p>
+            <p>Bio: {{ user.profile.bio|default:"No bio yet" }}</p>
+            <button class="btn" onclick="toggleEditMode()">Edit</button>
+        </div>
+        <div id="edit-mode" class="edit-mode">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="button-group">
+                    <button type="submit" class="btn">Save Changes</button>
+                    <button type="button" class="btn" onclick="toggleEditMode()">Cancel</button>
+                </div>
+            </form>
+        </div>
+        <a href="{% url 'profileapp:logout' %}" class="link">Logout</a>
+    </div>
+    <script>
+        function toggleEditMode() {
+            const viewMode = document.getElementById('view-mode');
+            const editMode = document.getElementById('edit-mode');
+            if (viewMode.style.display === 'block') {
+                viewMode.style.display = 'none';
+                editMode.style.display = 'block';
+            } else {
+                viewMode.style.display = 'block';
+                editMode.style.display = 'none';
+            }
+        }
+    </script>
 </body>
 </html>
