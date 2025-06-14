@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'home', # Redirection Home Application
     'blogapp', # Task-1 Blog Application
     'todoapp', # Task-2 Todo Application
     'rest_framework', # Django REST Framework for API development in task-2
