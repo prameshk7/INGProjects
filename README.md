@@ -25,6 +25,7 @@ This is built with DRF so navigation maybe bit tricky.
 ## How to run the userprofile app?
 - Click "Go to Profile App" to navigate to http://127.0.0.1:8000/userprofile/register
 - Register a user, log in, reset password, and update the profile.
+- The forgot password otp can be viewed in console for development purpose.
 
 ### The dependencies can be installed by pip install -r requirements.txt
 <br/>
