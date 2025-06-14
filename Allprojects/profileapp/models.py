@@ -5,7 +5,9 @@ from django.dispatch import receiver
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    email = models.EmailField()
     bio = models.TextField(max_length=500, blank=True)
+    profile_picture = models.URLField(max_length=200, blank=True)
 
     def __str__(self):
         return f"{self.user.username}'s Profile"

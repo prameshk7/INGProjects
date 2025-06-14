@@ -16,7 +16,7 @@ def register(request):
             return redirect('profileapp:login')
     else:
         form = UserCreationForm()
-    return render(request, 'register.html', {'form': form})
+    return render(request, 'profileapp/register.html', {'form': form})
 
 def user_login(request):
     if request.method == 'POST':
@@ -28,7 +28,7 @@ def user_login(request):
             return redirect('profileapp:profile')
     else:
         form = AuthenticationForm()
-    return render(request, 'login.html', {'form': form})
+    return render(request, 'profileapp/login.html', {'form': form})
 
 def user_logout(request):
     logout(request)
