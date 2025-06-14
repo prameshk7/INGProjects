@@ -58,6 +58,7 @@ REST_FRAMEWORK = {
 
 # Email settings for password reset functionality in task-3 profileapp
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST_USER = 'pramesh@example.com'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
